@@ -1,7 +1,17 @@
 const {prompt} = require("inquirer");
 const logo = require("asciiart-logo");
 const db = require("./db");
+const express = require('express');
+const sequelize = require('./db/connection');
+
 require("console.table");
+
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT);
+  });
 
 init();
 
@@ -17,7 +27,7 @@ function loadMainPrompts() {
     prompt([
         {
             type: "list",
-            name: "mainMenu",
+            name: "choice",
             message: "What would you like to do?",
             choices: [
                 {
@@ -79,7 +89,8 @@ function loadMainPrompts() {
             ]
         }
     ]).then(res => {
-        switch (mainMenu) {
+        let choice = res.choice;
+        switch (choice) {
             case "VIEW_EMPLOYEES":
                 viewEmployees();
                 break;
@@ -366,4 +377,10 @@ function removeDepartment() {
         .then(() => console.log("Removed department from the database."))
         .then(() => loadMainPrompts())
     })
+}
+
+
+function quit() {
+    connection.end();
+    console.log("Thank you for using Employee Manager!\nType 'node index.js' in terminal to begin again.");
 }

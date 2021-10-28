@@ -1,6 +1,6 @@
 const connection = require("./connection");
 
-class DB {
+class db {
     constructor(connection) {
         this.connection = connection;
     }
@@ -54,3 +54,5 @@ class DB {
         return this.connection.promise().query("DELETE FROM department WHERE id = ?", departmentId);
     }
 }
+
+module.exports = db

@@ -1,7 +1,7 @@
 {
   "name": "employee-tracker",
   "version": "1.0.0",
-  "description": "Node, MySQL CLI application for managing a company's employee database",
+  "description": "Command-line CMS application for managing a company's employee database utilizing Node.js and MySql",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,7 @@
     "url": "git+https://github.com/helovedus1st/employee-tracker.git"
   },
   "keywords": [
+    "CMS",
     "hr",
     "employee",
     "manager",
@@ -32,7 +33,9 @@
     "asciiart-logo": "^0.2.6",
     "console.table": "^0.10.0",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "inquirer": "^8.2.0",
-    "mysql2": "^2.3.2"
+    "mysql2": "^2.3.2",
+    "sequelize": "^6.8.0"
   }
 }
