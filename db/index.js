@@ -49,4 +49,8 @@ class DB {
     findAllDepartments() {
         return this.connection.promise().query("SELECT department.id, department.name FROM department;");
     }
+
+    removeDepartment(departmentId) {
+        return this.connection.promise().query("DELETE FROM department WHERE id = ?", departmentId);
+    }
 }
