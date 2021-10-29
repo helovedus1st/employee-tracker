@@ -1,17 +1,8 @@
 const {prompt} = require("inquirer");
 const logo = require("asciiart-logo");
 const db = require("./db");
-const express = require('express');
-const sequelize = require('./db/connection');
 
 require("console.table");
-
-
-const app = express();
-const PORT = process.env.PORT || 3001;
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT);
-  });
 
 init();
 
@@ -34,14 +25,14 @@ function loadMainPrompts() {
                     name: "View All Employees",
                     value: "VIEW_EMPLOYEES"
                 },
-                {
-                    name: "View All Employees By Department",
-                    value: "VIEW_EMPLOYEES_BY_DEPARTMENT"
-                },
-                {
-                    name: "View All Employees By Manager",
-                    value: "VIEW_EMPLOYEES_BY_MANAGER"
-                },
+                // {
+                //     name: "View All Employees By Department",
+                //     value: "VIEW_EMPLOYEES_BY_DEPARTMENT"
+                // },
+                // {
+                //     name: "View All Employees By Manager",
+                //     value: "VIEW_EMPLOYEES_BY_MANAGER"
+                // },
                 {
                     name: "Add Employee",
                     value: "ADD_EMPLOYEE"
@@ -94,12 +85,12 @@ function loadMainPrompts() {
             case "VIEW_EMPLOYEES":
                 viewEmployees();
                 break;
-            case "VIEW_EMPLOYEES_BY_DEPARTMENT":
-                viewEmployeesByDepartment();
-                break;
-            case "VIEW_EMPLOYEES_BY_MANAGER":
-                viewEmployessByManager();
-                break;
+            // case "VIEW_EMPLOYEES_BY_DEPARTMENT":
+            //     viewEmployeesByDepartment();
+            //     break;
+            // case "VIEW_EMPLOYEES_BY_MANAGER":
+            //     viewEmployeesByManager();
+            //     break;
             case "ADD_EMPLOYEE":
                 addEmployee();
                 break;
@@ -173,7 +164,7 @@ function viewEmployeesByDepartment() {
     });
 }
 
-function viewEmployessByManager() {
+function viewEmployeesByManager() {
     db.findAllEmployees()
     .then(([rows]) => {
         let managers = rows;
@@ -208,7 +199,7 @@ function removeEmployee() {
     db.findAllEmployees()
     .then(([rows]) => {
         let employees = rows;
-        const employeeChoices = employee.map(({ id, first_name, last_name }) => ({
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
             name: `${first_name} ${last_name}`,
             value: id
         }));
@@ -231,7 +222,7 @@ function updateEmployeeRole() {
     db.findAllEmployees()
     .then(([rows]) => {
         let employees = rows;
-        const employeeChoices = employee.map(({ id, first_name, last_name }) => ({
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
             name: `${first_name} ${last_name}`,
             value: id
         }));
@@ -274,7 +265,7 @@ function updateEmployeeManager() {
     db.findAllEmployees()
     .then(([rows]) => {
         let employees = rows;
-        const employeeChoices = employee.map(({ id, first_name, last_name }) => ({
+        const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
             name: `${first_name} ${last_name}`,
             value: id
         }));
@@ -381,6 +372,6 @@ function removeDepartment() {
 
 
 function quit() {
-    connection.end();
     console.log("Thank you for using Employee Manager!\nType 'node index.js' in terminal to begin again.");
+    process.exit();
 }
